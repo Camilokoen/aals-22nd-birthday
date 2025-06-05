@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Parisienne&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF7F0; /* Off-white */
+            color: #333333; /* Dark Grey */
+            scroll-behavior: smooth;
+        }
+
+        .hero-section {
+            background-image: url('https://i.imgur.com/H9g2NhB.jpg'); /* Placeholder, replace with your image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .font-parisienne {
+            font-family: 'Parisienne', cursive;
+        }
+
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Section-specific styling */
+        section {
+            padding: 60px 20px;
+            min-height: 80vh; /* Ensure sections take up good space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #hero {
+            min-height: 100vh;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        #our-journey {
+            background-color: #FFF0F5; /* Lavender Blush */
+        }
+
+        #love-reasons {
+            background-color: #E6E6FA; /* Lavender */
+        }
+
+        #special-message {
+            background-color: #FAFAD2; /* Light Goldenrod Yellow */
+        }
+
+        #wishes-dreams {
+            background-color: #FFE4E1; /* Misty Rose */
+        }
+
+        #celebrate {
+            background-color: #FFDAE9; /* Light Pink */
+        }
+
+        /* Slideshow styles */
+        .slideshow-container {
+            max-width: 600px;
+            position: relative;
+            margin: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        .mySlides img {
+            width: 100%;
+            height: 400px; /* Fixed height for slideshow images */
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .dot-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #FFC0CB; /* Soft Pink */
+        }
+
+        /* Fade animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* Interactive Cards for "What I Love About You" */
+        .love-card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .love-card {
+            background-color: white;
+            border: 2px solid #FFD700; /* Gold accent */
+            border-radius: 15px;
+            padding: 20px;
+            width: 250px;
+            min-height: 150px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .love-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3); /* Gold shadow */
+        }
+        .love-card .reason-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+         .love-card .reason-detail {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 10px;
+            display: none; /* Initially hidden */
+        }
+
+        /* Animated List for "What I Love About You" (Alternative) */
+        .love-list li {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #4A00E0; /* Deep purple text for contrast */
+        }
+
+        /* Modal for birthday surprise */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #FFC0CB; /* Soft Pink */
+            margin: auto;
+            padding: 30px;
+            border: 5px solid #FFD700; /* Gold */
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: modalPop 0.5s ease-out;
+        }
+
+        @keyframes modalPop {
+            from {transform: scale(0.7); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        .close-button {
+            color: #333333;
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #FFD700; /* Gold */
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Navigation for single-page scroll */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 192, 203, 0.8); /* Semi-transparent soft pink */
+            backdrop-filter: blur(5px);
+            z-index: 50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            margin: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333333;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav ul li a:hover, nav ul li a.nav-active {
+            background-color: #FFD700; /* Gold */
+            color: white;
+        }
+
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- Navigation -->
+    <nav>
+        <ul id="navbar">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#our-journey">Our Journey</a></li>
+            <li><a href="#special-message">Message</a></li>
+            <li><a href="#wishes-dreams">Your Dreams</a></li>
+            <li><a href="#celebrate">Celebrate!</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section flex flex-col justify-center items-center text-center">
+        <h1 class="font-parisienne text-6xl md:text-8xl mb-4">Happy Birthday, Aaliyah!</h1>
+        <p class="text-xl md:text-3xl font-light mb-6">My world is brighter and more beautiful because of you.</p>
+        <a href="#our-journey" class="mt-4 px-8 py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-lg shadow-lg transition duration-300 text-lg">
+            Discover More &darr;
+        </a>
+    </section>
+
+    <!-- Our Journey Section - Photo Slideshow -->
+    <section id="Your 21st Year Journey">
+        <h2 class="font-playfair text-4xl md:text-5xl mb-8 text-pink-600">21st Year Highlights</h2>
+        <div class="slideshow-container">
+            <!-- Replace with your images -->
+            <div class="mySlides fade">
+                <img src="https://i.imgur.com/atgcXPr.jpg">
+                <div class="text-center p-4 bg-black bg-opacity-50 text-white rounded-b-lg">Ciee ke Taipei nich</div>
+            </div>
+            <div class="mySlides fade">
+                <img src="https://i.imgur.com/5WX1nke.jpg">
+                <div class="text-center p-4 bg-black bg-opacity-50 text-white rounded-b-lg">Tahun ini kita nyanyi bareng 76382 kali deh kayanya</div>
+            </div>
+            <div class="mySlides fade">
+                <img src="https://i.imgur.com/gu8qeLE.jpg">
+                 <div class="text-center p-4 bg-black bg-opacity-50 text-white rounded-b-lg">Eitts tahun baruan nich hehehe</div>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+        <p class="mt-6 text-lg max-w-2xl">Inget gak tahun ini kamu udah ngapain aja? these are some of these years most precious memories hehe .</p>
+    </section>
+
+    <!-- Special Message Section -->
+    <section id="special-message">
+        <h2 class="font-playfair text-4xl md:text-5xl mb-8 text-yellow-600">A Message From My Heart</h2>
+        <div class="max-w-3xl bg-white p-8 rounded-xl shadow-xl">
+            <h3 class="font-playfair text-2xl mb-4 text-gray-700">To My Dearest Aal,</h3>
+            <p class="text-left mb-4 text-gray-600">
+                Happy 22nd Birthday, Sayangku! This past year has given you a lot of precious memories. There's so many moments that we shared together and I am so proud with what you achieved this past year.
+            </p>
+            <p class="text-left mb-4 text-gray-600">
+                You are the prettiest, cutest, and funniest girl in the world, hehe. I always admired how always try to become a better person and overcoming challenges around you.
+                One of things that I appreciate most of your 21st year is how you explore your hobby in singing like never before, and i am so so proud of you!
+            </p>
+            <p class="text-left text-gray-600">
+                Don't ever stop being you ya, sayang. You may think you're not perfect, but so does everyone. Don't be too insecure of yourself and please be proud of who you are, because you are so so gifted and talented
+                I love you more than words can say. Happy Birthday, sayangku.
+            </p>
+            <p class="text-right mt-6 font-parisienne text-3xl text-pink-500">With all my love,<br>Milo</p>
+        </div>
+        <!-- Optional: Add a placeholder for a video message here -->
+        <!-- <div class="mt-8">
+            <h3 class="font-playfair text-2xl mb-4">And a little video message...</h3>
+            <video controls width="100%" max-width="500px" class="rounded-lg shadow-lg" poster="https://placehold.co/500x281/cccccc/333333?text=Video+Message+Preview">
+                <source src="your_video_url.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div> -->
+    </section>
+
+    <!-- Your Wishes & Dreams Section -->
+    <section id="wishes-dreams">
+        <h2 class="font-playfair text-4xl md:text-5xl mb-8 text-red-500">Here's to You & Your Bright Future!</h2>
+        <img src="https://i.imgur.com/hYHSXpj.jpg" class="rounded-lg shadow-md mb-6">
+        <p class="text-lg max-w-2xl mb-4">
+            Semoga impian dan harapan kamu tahun ini tercapai ya, sayang. I know you will face new challenges this year, but i'm 100% sure you can overcome them.
+        </p>
+        <p class="text-lg max-w-2xl">
+            I wish you a year filled with success in your career, to always find joy in little things like playing with cats or singing, and have even more unforgettable adventures. I'll be cheering you on every step of the way!
+        </p>
+    </section>
+
+    <!-- Let's Celebrate Section -->
+    <section id="celebrate">
+        <h2 class="font-playfair text-4xl md:text-5xl mb-8 text-pink-700">The Celebration Continues...</h2>
+        <img src= "https://i.imgur.com/bmyeNQE.jpg" alt="Birthday Cake and Gifts" class="rounded-full shadow-lg mb-6">
+        <p class="text-xl max-w-2xl mb-6">
+            Happy Birthday once again, Aal! I hope today is as wonderful and special as you are.
+        </p>
+        <p class="text-lg max-w-2xl mb-8">
+            Get ready for our trip ke PIK yaa!
+        </p>
+
+    <footer class="text-center p-10 bg-gray-800 text-gray-300">
+        <p>&copy; <span id="currentYear"></span> Milo - Made with Love for Aaliyah</p>
+    </footer>
+
+    <script>
+        // Slideshow Logic
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            if (slides.length > 0) {
+                slides[slideIndex-1].style.display = "block";
+                dots[slideIndex-1].className += " active";
+            }
+        }
+        // Auto-play slideshow (optional)
+        // setInterval(() => { plusSlides(1); }, 5000); // Change image every 5 seconds
+
+
+        // Interactive Love Cards Logic
+        function toggleDetail(card) {
+            const detail = card.querySelector('.reason-detail');
+            if (detail) {
+                 detail.style.display = detail.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+
+        // Animated List for "What I Love About You" (Alternative) - Intersection Observer
+        // This is an alternative to the cards, choose one or the other, or combine.
+        // For now, this part is commented out as cards are implemented.
+        /*
+        const loveListItems = document.querySelectorAll('.love-list li');
+        const observerOptions = {
+            root: null, // observes intersections relative to the viewport
+            rootMargin: '0px',
+            threshold: 0.1 // trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target); // stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        loveListItems.forEach(item => {
+            observer.observe(item);
+        });
+        */
+
+        // Surprise Modal Logic
+        const modal = document.getElementById('birthdaySurpriseModal');
+        const surpriseButton = document.getElementById('surpriseButton');
+
+        if (surpriseButton) {
+            surpriseButton.onclick = function() {
+                if (modal) modal.style.display = "flex";
+            }
+        }
+
+        function closeModal() {
+            if (modal) modal.style.display = "none";
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Update current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Smooth scroll for navigation and active nav link highlighting
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const sections = document.querySelectorAll('section');
+
+            function changeNavActiveState() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // Adjust for nav height if nav is fixed
+                    if (pageYOffset >= sectionTop - (document.querySelector('nav').offsetHeight + 20)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('nav-active');
+                    }
+                });
+            }
+
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                         // Adjust for nav height if nav is fixed
+                        const offsetTop = targetElement.offsetTop - document.querySelector('nav').offsetHeight;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            window.addEventListener('scroll', changeNavActiveState);
+            changeNavActiveState(); // Initial check
+        });
+
+    </script>
+</body>
+</html>
